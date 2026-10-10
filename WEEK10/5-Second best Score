@@ -1,0 +1,31 @@
+public class Solution {
+    public static int secondHighest(int[] scores) {
+        int highest = -1;
+        int second = -1;
+
+        for (int score : scores) {
+            // Case 1: Found a new highest score
+            if (score > highest) {
+                second = highest;
+                highest = score;
+            } 
+            // Case 2: Found a score between current highest and second highest
+            else if (score > second && score < highest) {
+                second = score;
+            }
+            // If score == highest or score <= second, we safely skip it
+        }
+
+        return second;
+    }
+
+    public static void main(String[] args) {
+        // Test Sample 1
+        int[] sample1 = {45, 78, 92, 78, 60};
+        System.out.println("Sample 1 Output: " + secondHighest(sample1)); // Expected: 78
+
+        // Test Sample 2
+        int[] sample2 = {50, 50, 50};
+        System.out.println("Sample 2 Output: " + secondHighest(sample2)); // Expected: -1
+    }
+}

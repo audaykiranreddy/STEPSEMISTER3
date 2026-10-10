@@ -1,0 +1,55 @@
+public class ExamScoreBandCounter {
+
+    public static int countInBand(int[] scores, int low, int high) {
+        // Find the index of the first element >= low
+        int startIdx = lowerBound(scores, low);
+        // Find the index of the first element > high
+        int endIdx = upperBound(scores, high);
+        
+        // The number of elements in [low, high] is the difference between indices
+        return endIdx - startIdx;
+    }
+
+    // Finds the first position where score >= target
+    private static int lowerBound(int[] scores, int target) {
+        int left = 0;
+        int right = scores.length;
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (scores[mid] >= target) {
+                right = mid; // Look left to find the first occurrence
+            } else {
+                left = mid + 1; // Look right
+            }
+        }
+        return left;
+    }
+
+    // Finds the first position where score > target
+    private static int upperBound(int[] scores, int target) {
+        int left = 0;
+        int right = scores.length;
+        
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (scores[mid] > target) {
+                right = mid; // Look left to find the first element strictly greater
+            } else {
+                left = mid + 1; // Look right
+            }
+        }
+        return left;
+    }
+
+    // Main method to verify the samples
+    public static void main(String[] args) {
+        // Sample 1
+        int[] scores1 = {35, 42, 42, 50, 58, 58, 58, 63, 71, 88};
+        System.out.println("Sample 1 Output: " + countInBand(scores1, 42, 58)); // Expected: 6
+
+        // Sample 2
+        int[] scores2 = {35, 42, 42, 50, 58, 58, 58, 63, 71, 88};
+        System.out.println("Sample 2 Output: " + countInBand(scores2, 90, 100)); // Expected: 0
+    }
+}
