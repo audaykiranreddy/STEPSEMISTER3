@@ -1,0 +1,98 @@
+import java.util.*;
+
+interface Student {
+    double calculateFee();
+    String getName();
+}
+
+interface BusUser {
+    double TRANSPORT_FEE = 12000.0;
+}
+
+class DayScholar implements Student, BusUser {
+    private String name;
+
+    DayScholar(String name) {
+        this.name = name;
+    }
+
+    public double calculateFee() {
+        return 40000 + TRANSPORT_FEE;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+class Hosteller implements Student {
+    private String name;
+
+    Hosteller(String name) {
+        this.name = name;
+    }
+
+    public double calculateFee() {
+        return 40000 + 60000;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+class Scholar implements Student, BusUser {
+    private String name;
+
+    Scholar(String name) {
+        this.name = name;
+    }
+
+    public double calculateFee() {
+        return 20000 + TRANSPORT_FEE;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        double totalCollected = 0;
+
+        for (int i = 0; i < n; i++) {
+            String type = sc.next();
+            String name = sc.next();
+
+            Student student;
+
+            switch (type) {
+                case "DAY_SCHOLAR":
+                    student = new DayScholar(name);
+                    break;
+
+                case "HOSTELLER":
+                    student = new Hosteller(name);
+                    break;
+
+                default:
+                    student = new Scholar(name);
+            }
+
+            double fee = student.calculateFee();
+            totalCollected += fee;
+
+            System.out.printf("%s: %.2f%n",
+                    student.getName(), fee);
+        }
+
+        System.out.printf(
+                "Total Collected: %.2f%n",
+                totalCollected
+        );
+    }
+}
